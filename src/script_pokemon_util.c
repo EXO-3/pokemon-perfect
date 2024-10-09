@@ -461,7 +461,7 @@ u32 ScriptGiveMon(u16 species, u8 level, u16 item)
                                 MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1, MAX_PER_STAT_IVS + 1};  // ScriptGiveMonParameterized won't touch the stats' IV.
     u16 moves[MAX_MON_MOVES] = {MOVE_NONE, MOVE_NONE, MOVE_NONE, MOVE_NONE};
 
-    return ScriptGiveMonParameterized(0, PARTY_SIZE, species, level, item, ITEM_POKE_BALL, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, evs, ivs, moves, FALSE, FALSE, NUMBER_OF_MON_TYPES);
+    return ScriptGiveMonParameterized(0, PARTY_SIZE, species, level, item, ITEM_POKE_BALL, NUM_NATURES, NUM_ABILITY_PERSONALITY, MON_GENDERLESS, evs, ivs, moves, TRUE, FALSE, NUMBER_OF_MON_TYPES);
 }
 
 #define PARSE_FLAG(n, default_) (flags & (1 << (n))) ? VarGet(ScriptReadHalfword(ctx)) : (default_)
@@ -481,6 +481,7 @@ void ScrCmd_createmon(struct ScriptContext *ctx)
     u8 nature         = PARSE_FLAG(2, NUM_NATURES);
     u8 abilityNum     = PARSE_FLAG(3, NUM_ABILITY_PERSONALITY);
     u8 gender         = PARSE_FLAG(4, MON_GENDERLESS); // TODO: Find a better way to assign a random gender.
+    bool8 isShiny     = PARSE_FLAG(21, FALSE);
     u8 hpEv           = PARSE_FLAG(5, 0);
     u8 atkEv          = PARSE_FLAG(6, 0);
     u8 defEv          = PARSE_FLAG(7, 0);
@@ -493,11 +494,20 @@ void ScrCmd_createmon(struct ScriptContext *ctx)
     u8 speedIv        = PARSE_FLAG(14, Random() % (MAX_PER_STAT_IVS + 1));
     u8 spAtkIv        = PARSE_FLAG(15, Random() % (MAX_PER_STAT_IVS + 1));
     u8 spDefIv        = PARSE_FLAG(16, Random() % (MAX_PER_STAT_IVS + 1));
+    
+    if(isShiny == TRUE){
+        hpIv           = PARSE_FLAG(11, 31);
+        atkIv          = PARSE_FLAG(12, 31);
+        defIv          = PARSE_FLAG(13, 31);
+        speedIv        = PARSE_FLAG(14, 31);
+        spAtkIv        = PARSE_FLAG(15, 31);
+        spDefIv        = PARSE_FLAG(16, 31);
+    }
+
     u16 move1         = PARSE_FLAG(17, MOVE_NONE);
     u16 move2         = PARSE_FLAG(18, MOVE_NONE);
     u16 move3         = PARSE_FLAG(19, MOVE_NONE);
     u16 move4         = PARSE_FLAG(20, MOVE_NONE);
-    bool8 isShiny     = PARSE_FLAG(21, FALSE);
     bool8 ggMaxFactor = PARSE_FLAG(22, FALSE);
     u8 teraType       = PARSE_FLAG(23, NUMBER_OF_MON_TYPES);
 
