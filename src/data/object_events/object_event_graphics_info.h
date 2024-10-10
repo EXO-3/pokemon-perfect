@@ -1856,7 +1856,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_EnemyZigzagoon = {
     .oam = &gObjectEventBaseOam_32x32,
     .subspriteTables = sOamTables_32x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_EnemyZigzagoon,
+    .images = sPicTable_EnemyZigzagoon, //.images = sPicTable_EnemyZigzagoon,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 

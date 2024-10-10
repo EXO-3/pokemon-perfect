@@ -575,7 +575,18 @@ LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer:
 	step_end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_Machine::
-	msgbox LittlerootTown_ProfessorBirchsLab_Text_SeriousLookingMachine, MSGBOX_SIGN
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_IVAnalyzer, MSGBOX_DEFAULT
+	lockall
+	getpartysize
+	goto_if_eq VAR_RESULT, 0, Debug_NoPokemon
+	special ChoosePartyMon
+	waitstate
+	goto_if_ge VAR_0x8004, PARTY_SIZE, Debug_EventScript_CheckIVs_End
+	callnative Script_GetChosenMonOffensiveIVs
+	msgbox Debug_EventScript_Text_OffensiveIVs, MSGBOX_DEFAULT
+	callnative Script_GetChosenMonDefensiveIVs
+	msgbox Debug_EventScript_Text_DefensiveIVs, MSGBOX_DEFAULT
+	releaseall
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_Rival::
@@ -804,13 +815,16 @@ LittlerootTown_ProfessorBirchsLab_Text_CatchCoolPokemonWithPokeBalls:
 LittlerootTown_ProfessorBirchsLab_Text_HeyYourBagsFull:
 	.string "Hey, your BAG's full.$"
 
+LittlerootTown_ProfessorBirchsLab_Text_IVAnalyzer:
+	.string "Booted up the IV Analyzer$"
+
 LittlerootTown_ProfessorBirchsLab_Text_BrendanWhereShouldIGoNext:
 	.string "BRENDAN: Where should I look for\n"
 	.string "POKéMON next…$"
 
 LittlerootTown_ProfessorBirchsLab_Text_SeriousLookingMachine:
-	.string "It's a serious-looking machine.\n"
-	.string "The PROF must use this for research.$"
+	.string "IV checking machine? Weird. \n"
+	.string "Better leave it.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_PCUsedForResearch:
 	.string "It's a PC used for research.\n"
