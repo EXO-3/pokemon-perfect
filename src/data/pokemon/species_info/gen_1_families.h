@@ -6789,7 +6789,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .palette = gMonPalette_Growlithe,
         .shinyPalette = gMonShinyPalette_Growlithe,
         .iconSprite = gMonIcon_Growlithe,
-        .iconPalIndex = 3,
+        .iconPalIndex = 1,
         FOOTPRINT(Growlithe)
         OVERWORLD(
             sPicTable_Growlithe,
